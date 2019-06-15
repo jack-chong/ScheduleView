@@ -1,8 +1,13 @@
 package com.jack.scheduleview;
 
+import android.graphics.drawable.StateListDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jack.schedule.bean.CardColor;
 import com.jack.schedule.bean.ScheduleBean;
 import com.jack.schedule.utlis.ListUtils;
@@ -22,108 +27,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWeekView = findViewById(R.id.weekView);
+
+        initView();
+
 
         initData();
     }
 
+    private void initView() {
+        mWeekView = findViewById(R.id.weekView);
+        mWeekView.setOnClickWeekListener((weekView, time) -> {
+            Toast.makeText(MainActivity.this, "点击周", Toast.LENGTH_SHORT).show();
+        });
+        mWeekView.setOnCardClickListener((weekView, bean) -> {
+            Toast.makeText(MainActivity.this, "点击卡片: " + bean.getTitle(), Toast.LENGTH_SHORT).show();
+        });
+    }
+
     private void initData(){
-        CardColor[] mColors = {new CardColor("#B3C9EFE0", "#FFAFE7D1"), new CardColor("#B3ADCEF0", "#FF7BB2F2"),
-                new CardColor("#B3BBBFFF", "#FF8A9AFE"), new CardColor("#B3EAEDE7", "#FFD6DEEC")};
+        List<WeekBean> weekBeans = new Gson().fromJson(WeekData.json, new TypeToken<List<WeekBean>>() {}.getType());
+        List<List<WeekBean>> lists = ListUtils.split(weekBeans, "getStartDay", true);
 
-        List<WeekBean> list = new ArrayList<>();
-        List<List<WeekBean>> lists = new ArrayList<>();
-        {
-            WeekBean weekBean = new WeekBean(new ScheduleBean());
-            weekBean.setAddress("JD");
-            weekBean.setTitle("8");
-            weekBean.setStartTime((int) (TimeUtils.getTodayZero() / 1000) + TimeUtils.HOUT_SECOND * 8);
-            weekBean.setStartDay((int) (TimeUtils.getTodayZero() / 1000));
-            weekBean.setEndTime(weekBean.getStartTime() + TimeUtils.HOUT_SECOND * 3);
-            weekBean.setColor(mColors[new Random().nextInt(mColors.length)]);
-            list.add(weekBean);
+        for (List<WeekBean> list : lists) {
+            ListUtils.sort(list, "getStartTime", true);
+            for (int i = 0; i < list.size(); i++) {
+                find(i, list);
+            }
         }
-        {
-            WeekBean weekBean = new WeekBean(new ScheduleBean());
-            weekBean.setAddress("JD");
-            weekBean.setTitle("8.5");
-            weekBean.setStartTime((int) ((int) (TimeUtils.getTodayZero() / 1000) + TimeUtils.HOUT_SECOND * 8.5));
-            weekBean.setStartDay((int) (TimeUtils.getTodayZero() / 1000));
-            weekBean.setEndTime((int) (weekBean.getStartTime() + TimeUtils.HOUT_SECOND * 0.5f));
-            weekBean.setColor(mColors[new Random().nextInt(mColors.length)]);
-            list.add(weekBean);
-        }
-        {
-            WeekBean weekBean = new WeekBean(new ScheduleBean());
-            weekBean.setAddress("JD");
-            weekBean.setTitle("10");
-            weekBean.setStartTime((int) (TimeUtils.getTodayZero() / 1000) + TimeUtils.HOUT_SECOND * 10);
-            weekBean.setStartDay((int) (TimeUtils.getTodayZero() / 1000));
-            weekBean.setEndTime(weekBean.getStartTime() + TimeUtils.HOUT_SECOND * 3);
-            weekBean.setColor(mColors[new Random().nextInt(mColors.length)]);
-            list.add(weekBean);
-        }
-        {
-            WeekBean weekBean = new WeekBean(new ScheduleBean());
-            weekBean.setAddress("JD");
-            weekBean.setTitle("10.5");
-            weekBean.setStartTime((int) ((int) (TimeUtils.getTodayZero() / 1000) + TimeUtils.HOUT_SECOND * 10.5));
-            weekBean.setStartDay((int) (TimeUtils.getTodayZero() / 1000));
-            weekBean.setEndTime(weekBean.getStartTime() + TimeUtils.HOUT_SECOND * 1);
-            weekBean.setColor(mColors[new Random().nextInt(mColors.length)]);
-            list.add(weekBean);
-        }
-        {
-            WeekBean weekBean = new WeekBean(new ScheduleBean());
-            weekBean.setAddress("JD");
-            weekBean.setTitle("11.5");
-            weekBean.setStartTime((int) ((int) (TimeUtils.getTodayZero() / 1000) + TimeUtils.HOUT_SECOND * 11.5));
-            weekBean.setStartDay((int) (TimeUtils.getTodayZero() / 1000));
-            weekBean.setEndTime(weekBean.getStartTime() + TimeUtils.HOUT_SECOND * 2);
-            weekBean.setColor(mColors[new Random().nextInt(mColors.length)]);
-            list.add(weekBean);
-        }
-
-        List<WeekBean> list2 = new ArrayList<>();
-
-        {
-            WeekBean weekBean = new WeekBean(new ScheduleBean());
-            weekBean.setAddress("交融交流会");
-            weekBean.setTitle("教六 A6011");
-            weekBean.setStartTime((int) ((int) (TimeUtils.getTodayZero() / 1000) + TimeUtils.HOUT_SECOND * 36.5));
-            weekBean.setStartDay((int) (TimeUtils.getTodayZero() / 1000) + TimeUtils.DAY_SECOND);
-            weekBean.setEndTime(weekBean.getStartTime() + TimeUtils.HOUT_SECOND * 5);
-            weekBean.setColor(mColors[new Random().nextInt(mColors.length)]);
-            list2.add(weekBean);
-        }
-
-        {
-            WeekBean weekBean = new WeekBean(new ScheduleBean());
-            weekBean.setAddress("交融交流会123456");
-            weekBean.setTitle("教六 北京市科创十一街京东大厦A桌");
-            weekBean.setStartTime((int) ((int) (TimeUtils.getTodayZero() / 1000) + TimeUtils.HOUT_SECOND * 37.5));
-            weekBean.setStartDay((int) (TimeUtils.getTodayZero() / 1000) + TimeUtils.DAY_SECOND);
-            weekBean.setEndTime(weekBean.getStartTime() + TimeUtils.HOUT_SECOND * 7);
-            weekBean.setColor(mColors[new Random().nextInt(mColors.length)]);
-            list2.add(weekBean);
-        }
-
-
-        ListUtils.sort(list, "getStartTime", true);
-        ListUtils.sort(list2, "getStartTime", true);
-
-
-        for (int i = 0; i < list.size(); i++) {
-            find(i, list);
-        }
-        for (int i = 0; i < list2.size(); i++) {
-            find(i, list2);
-        }
-
-
-
-        lists.add(list);
-        lists.add(list2);
         mWeekView.setWeekData(lists);
     }
 

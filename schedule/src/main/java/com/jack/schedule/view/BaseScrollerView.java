@@ -22,7 +22,7 @@ import com.jack.schedule.bean.DeviceInfo;
 
 public abstract class BaseScrollerView extends View implements GestureActionListener {
 
-    private static final float MAX_SCALE = 5.0f;
+    private static final float MAX_SCALE = 3.0f;
     private VelocityTracker mVelocityTracker;
     private ScrollerRunnable mRunnable;
     protected float mOffsetX, mOffsetY;

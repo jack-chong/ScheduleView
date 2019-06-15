@@ -151,6 +151,9 @@ public class ContentCanvas extends BaseCanvas {
         int width = (int) (rectF.width() - cTextHorizontalPadding * 2);
         int height = (int) rectF.height();
 
+        if (width * height <= 0){
+            return;
+        }
 
         float titleSpace = mTitlePaint.descent() - mTitlePaint.ascent();
         float addressSpace = mTitlePaint.descent() - mTitlePaint.ascent();
