@@ -1,14 +1,12 @@
 # ScheduleView
 
 + 效果图
-![image](http://jackchong.cn/files/images/ScheduleView.gif)
-![video](http://jackchong.cn/files/video/ScheduleView.gif.mp4)
 ![image](https://github.com/jack-chong/ScheduleView/blob/master/app/gif/ScheduleView.gif)
 
   
   
 
-+ 功能
++ ####功能
   - 任意方向滑动
   - 惯性滚动
   - 边缘效应
