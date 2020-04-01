@@ -1,14 +1,17 @@
 # ScheduleView
 
 + 效果图
-![image](https://github.com/jack-chong/ScheduleView/blob/master/app/gif/ScheduleView.gif)
 ![image](http://jackchong.cn/files/images/ScheduleView.gif)
 ![video](http://jackchong.cn/files/video/ScheduleView.gif.mp4)
+![image](https://github.com/jack-chong/ScheduleView/blob/master/app/gif/ScheduleView.gif)
+
+  
+  
 
 + 功能
-- 任意方向滑动
-- 惯性滚动
-- 边缘效应
+  - 任意方向滑动
+  - 惯性滚动
+  - 边缘效应
   这是日程表控件,不过日程只是为了展现这个效果,  它其实是一个View的移动容器, 支持任意方向滑动, 支持双指缩放, 惯性滚动, 边缘效应.
   
   放上这个并不是让大家来使用这个日程, 而是给其他开发者一些借鉴, 因为在android系统控件中并没有一个可以任意方向滑动 + 缩放的View,  通过集成BaseScrollView来获得任意方向移动和缩放的效果, 目前只支持使用Canvas绘制的View, 并不能装载其他子View, 因为缩放子View会导致重新measuration, 重新layout, 耗时较长, 会产生明显的卡顿.
