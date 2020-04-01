@@ -1,6 +1,6 @@
 # ScheduleView
 
-####  ●效果图
+##  效果图
 
   ![image](https://github.com/jack-chong/ScheduleView/blob/master/app/gif/ScheduleView.gif)
 
